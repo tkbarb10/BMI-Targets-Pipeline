@@ -1,0 +1,65 @@
+---
+title: "Variable_Descrip"
+output: html_document
+---
+
+| Variable Name | Description                                               |
+| :------------ | :-------------------------------------------------------- |
+| **SRVY\_YR**  | Year of National Health Interview Survey                  |
+| **HHX**       | Household identifier                                      |
+| **FMX**       | Family serial number                                      |
+| **FPX**       | Person number (within family)                             |
+| **EVERWRK**   | Ever worked                                               |
+| **INDSTRN1**  | Detailed industry classification (1997 NAICS)             |
+| **OCCUPN1**   | Detailed occupation classification (2000 SOC)             |
+| **WRKCATA**   | Class of worker                                           |
+| **PDSICKA**   | Paid sick leave at current/most recent job                |
+| **HYPEV**     | Ever been told you have hypertension                      |
+| **HYPDIFV**   | Ever had hypertension on 2+ visits                        |
+| **CHDEV**     | Ever been told you had coronary heart disease             |
+| **ANGEV**     | Ever been told you had angina pectoris                    |
+| **MIEV**      | Ever been told you had a heart attack                     |
+| **HRTEV**     | Ever been told you had a heart condition/disease          |
+| **STREV**     | Ever been told you had a stroke                           |
+| **EPHEV**     | Ever been told you had emphysema                          |
+| **AASSTILL**  | Still have asthma                                         |
+| **CANEVI**    | Ever told by a doctor you had cancer                      |
+| **BMI**       | Body Mass Index (BMI)                                     |
+| **AHEIGHT**   | Total height in inches                                    |
+| **AWEIGHTP**  | Weight without shoes (pounds)                             |
+| **JNTSYMP**   | Symptoms of joint pain/aching/stiffness past 30 days      |
+| **AHSTATYR**  | Health better/worse/same compared with 12 months ago      |
+| **ALCHRC18**  | Weight problem condition status                           |
+| **SLEEP**     | Hours of sleep                                            |
+| **CANEV**     | Ever told by a doctor you had cancer                      |
+| **ALCHRC12**  | Cancer problem condition status                           |
+| **DIBEV**     | Ever been told you have diabetes                          |
+| **DIBAGE**    | Age first diagnosed with diabetes                         |
+| **AFLHCA10**  | Diabetes causes difficulty with activity                  |
+| **AFLHCA7**   | Heart problem causes difficulty with activity             |
+| **ALCHRC7**   | Heart problem condition status                            |
+| **ALCHRC9**   | Hypertension/high blood pressure problem condition status |
+| **ALCHRC10**  | Diabetes problem condition status                         |
+| **ALCHRC21**  | Circulatory problem condition status                      |
+| **SMKEV**     | Ever smoked 100 cigarettes                                |
+| **SMKREG**    | Age first smoked fairly regularly                         |
+| **SMKNOW**    | Smoke frequency: everyday/some days/not at all            |
+| **SMKSTAT2**  | Smoking Status: recode                                    |
+| **SMKQTY**    | Time since quit smoking (in years)                        |
+| **CIGSDA1**   | Number of cigarettes per day (daily smokers)              |
+| **CIGDAMO**   | Number of days smoked in past 30 days                     |
+| **CIGSDA2**   | Number of cigarettes per day (some day smokers)           |
+| **CIGSDAY**   | Number of cigarettes per day (all current smokers)        |
+| **CIGQTYR**   | Tried quitting smoking for 1+ days in past 12 months      |
+| **VIGFREQW**  | Frequency of vigorous activity (times per week)           |
+| **VIGMIN**    | Duration of vigorous activity (in minutes)                |
+| **MODFREQW**  | Frequency of moderate activity (times per week)           |
+| **MODMIN**    | Duration of moderate activity (in minutes)                |
+| **STRFREQW**  | Frequency of strength activity (times per week)           |
+| **AFLHCA18**  | Weight problem causes difficulty with activity            |
+| **ALC12MWK**  | Frequency drank alcohol: days per week                    |
+| **ALC12MYR**  | Frequency drank alcohol: days in past year                |
+| **ALCAMT**    | Average number of drinks on days drank                    |
+| **ALCSTAT**   | Alcohol drinking status: recode                           |
+| **ALC5UPYR**  | Number of days had 5+ drinks in past year                 |
+| **ALCHRC29**  | Fatigue problem condition status                          |

@@ -1,0 +1,426 @@
+---
+title: "Explore_final_df"
+format: html
+---
+**Libraries and scripts**
+
+```{r}
+source("utils/create_roc_objects.R")
+source("utils/generate_roc_plot.R")
+source('utils/bin_ucod.R')
+source("utils/learning_curve.R")
+library(tidyverse)
+library(targets)
+library(caret)
+```
+
+# EDA
+```{r}
+
+combined_df <- tar_read(combined_nhis)
+na_by_column <- combined_df %>% summarise(across(everything(), ~sum(is.na(.))))
+View(na_by_column)
+```
+
+```{r}
+linked_df <- tar_read(new_linked_nhis)
+
+linked_df_missing_values <- data.frame(
+  Count = colSums(is.na(linked_df)),
+  Freq = (colSums(is.na(linked_df) / dim(linked_df)[1]))
+)
+View(linked_df_missing_values)
+```
+
+```{r}
+
+df <- tar_read(new_linked_nhisV4)
+
+str(df)
+
+```
+
+**Once the data is linked, MORTSTAT, UUID and SRVY_YR can be safely dropped**
+
+```{r}
+df <- df %>% select(-c("SRVY_YR", 'MORTSTAT', "UUID"))
+```
+
+**We can see that BMI has several extreme outliers.  That's because the way the CDC codes this variable, some BMI values are 4 digits and need to be divided by 100.  There are also 9999 or 99.99 codes for unknown and many of the extreme values are actually hidden for the sake of confidentialty**
+```{r}
+hist(df$BMI)
+
+df <- df %>% 
+  mutate(
+    BMI = if_else(BMI >= 1000 & BMI != 9999, BMI / 100, BMI))
+```
+
+**After adjusting the BMI properly, 2443 records are left over with BMI coded as 9999 or 99.99 which means unknown.  This could be the result of the participant refusing to answer the height or weight or both question, or the values for either were too extreme, on either end, and were hidden.  In either case, BMI cannot be reasonably ascertained so it was decided to drop these values**
+
+```{r}
+df <- df %>% filter(BMI < 99)
+
+hist(df$BMI)
+
+#Creating bins for BMI to keep extreme values from skewing models
+
+df <- df %>% mutate(BMI = case_when(
+  BMI < 18.5 ~ "Underweight",
+  BMI >= 18.5 & BMI < 25 ~ "Healthy Weight",
+  BMI >=25 & BMI < 30 ~ "Overweight",
+  BMI >= 30 ~ "Obese"
+))
+```
+
+**The known values of BMI that are on the extreme end (above 40-50) have corresponding height and weight values of 96 or 996 respectively.  This is a code used by the CDC to indicate Not Available.  The CDC defines this as a known value that is on the extreme end, and therefore not available for public knowledge for the sake of confidentialty.  Considering the fact that "extreme" could indicate a value on the high or low end, binning these variables is unadvised.  And since BMI is a combination of height and weight, it was decided to drop these variables**
+
+```{r}
+
+df <- df %>% select(-c('AHEIGHT', 'AWEIGHTP'))
+```
+
+**Also removing DIABETES and HYPERTEN since those are confounding variables**
+
+```{r}
+df <- df %>% select(-c('DIABETES', 'HYPERTEN'))
+```
+
+**Our target variable is leading cause of death, coded as UCOD_LEADING in the linked mortality data.  There are 9 specific causes of death, and a category for all others.  Of the listed causes, BMI is historically most linked with deaths from heart diseases and diabetes, so it was decided to bin those causes of death together as the positive class, and treat the rest as other**
+
+
+```{r}
+
+df <- df %>% mutate(UCOD_LEADING = if_else(
+  UCOD_LEADING %in% c("001", "007"), 1, 0)
+)
+
+df$UCOD_LEADING <- as.factor(df$UCOD_LEADING)
+levels(df$UCOD_LEADING) <- c("Other", "HrDib")
+
+# The above steps are contained in the pipeline
+```
+
+**Now we can explore the final data frame we'll be using for modeling**
+
+```{r}
+
+# Call in from pipeline
+
+df <- tar_read(modeling_df)
+df_for_encoding <- tar_read(modeling_df)
+
+str(df)
+summary(df)
+
+# Check that levels align
+
+levels(df$UCOD_LEADING)
+```
+**To get a sense of the data, it was decided to train a few simple models to see how they perform, and get results for variable importance before deciding how to proceed.  ROC is the metric of choice for the initial models to get a better sense of the general performance of models on the data as is**
+
+```{r}
+
+# First Round Evaluation is the name of the portion of the pipeline
+
+models <- tar_read(first_models)
+
+# The names Caret uses for the models.  These can be changed at user discretion
+
+names(models)
+
+# ROC plots
+
+roc_objects <- map(models, create_roc)
+generate_roc_plot(roc_objects)
+```
+![Initial ROC Plot](initial_roc_plt.png)
+**It can be seen from the ROC plot that the CART model performs the worst, and the rest are all about the same.  Taking a deeper look...**
+
+```{r}
+
+first_models <- resamples(list(
+  "GLM" = models$glm,
+  'CART' = models$rpart,
+  "MARS" = models$earth,
+  "PLS" = models$pls,
+  "LDA" = models$lda,
+  "Centroids" = models$pam
+)
+)
+
+summary(first_models)
+
+bwplot(first_models)
+```
+```{r}
+
+glm_conf <- quantile(first_models$values$`GLM~ROC`, c(0.025, 0.975))
+cart_conf <- quantile(first_models$values$`CART~ROC`, c(0.025, 0.975))
+mars_conf <- quantile(first_models$values$`MARS~ROC`, c(0.025, 0.975))
+pls_conf <- quantile(first_models$values$`PLS~ROC`, c(0.025, 0.975))
+lda_conf <- quantile(first_models$values$`LDA~ROC`, c(0.025, 0.975))
+cent_conf <- quantile(first_models$values$`Centroids~ROC`, c(0.025, 0.975))
+
+ci_table <- data.frame(
+  Model = c("GLM", "Cart", "Mars", "Pls", "LDA", "Centroids"),
+  CI_lower = c(glm_conf[1], cart_conf[1], mars_conf[1], pls_conf[1], lda_conf[1], cent_conf[1]),
+  CI_upper = c(glm_conf[2], cart_conf[2], mars_conf[2], pls_conf[2], lda_conf[2], cent_conf[2])
+)
+print(ci_table)
+```
+
+**It can be seen from these initial models that there is very little variance in the results and the ROC is decent.  However there is a wide gap between Specificity and Sensitivity, indicating that the models are over guessing the negative class at the expense of the positive class, driven in part by the class imbalance**
+
+```{r}
+
+# class imbalance
+
+table(df$UCOD_LEADING)
+
+mars <- models$earth
+
+confusionMatrix(mars$pred$pred, mars$pred$obs)
+```
+**Balanced accuracy is better than guessing at least**
+
+```{r}
+
+# Leaving out the LDA model
+
+var_imps <- map(models[c(1:4, 6)], varImp)
+
+map(var_imps, plot, top = 15)
+
+glm_least <- var_imps$glm$importance %>% arrange(Overall)
+cart_least <- var_imps$rpart$importance %>% arrange(Overall)
+pls_least <- var_imps$pls$importance %>% arrange(Overall)
+centroid_least <- var_imps$pam$importance %>% arrange(HrDib)
+
+head(glm_least)
+head(cart_least)
+head(pls_least)
+head(centroid_least)
+var_imps$earth$importance
+```
+
+**From viewing variable importance of the models (with the exception of LDA), it seems clear that industry and occupation play very little role in predictions.  The alcohol variables also do not seem to play a large role.  VIGFREQW and STRFREQW were also captured by near zero variance pre-processing.  Next steps will be to drop these variables and balance the classes**
+
+```{r}
+
+df <- df %>% select(-c("Industry", "Occupation", "AlcoholStatus", "VIGFREQW", "STRFREQW"))
+
+second_round <- tar_read(second_models)
+
+# ROC plots
+
+roc_objects <- map(second_round, create_roc)
+generate_roc_plot(roc_objects)
+
+```
+![Initial ROC Plot](initial_roc_plt.png)
+
+
+```{r}
+
+second_models <- resamples(list(
+  "GLM" = second_round$glm,
+  'CART' = second_round$rpart,
+  "MARS" = second_round$earth,
+  "PLS" = second_round$pls,
+  "LDA" = second_round$lda,
+  "Centroids" = second_round$pam
+)
+)
+
+summary(second_models)
+
+bwplot(second_models)
+
+```
+```{r}
+glm_conf <- quantile(second_models$values$`GLM~ROC`, c(0.025, 0.975))
+cart_conf <- quantile(second_models$values$`CART~ROC`, c(0.025, 0.975))
+mars_conf <- quantile(second_models$values$`MARS~ROC`, c(0.025, 0.975))
+pls_conf <- quantile(second_models$values$`PLS~ROC`, c(0.025, 0.975))
+lda_conf <- quantile(second_models$values$`LDA~ROC`, c(0.025, 0.975))
+cent_conf <- quantile(second_models$values$`Centroids~ROC`, c(0.025, 0.975))
+
+ci_table <- data.frame(
+  Model = c("GLM", "Cart", "Mars", "Pls", "LDA", "Centroids"),
+  CI_lower = c(glm_conf[1], cart_conf[1], mars_conf[1], pls_conf[1], lda_conf[1], cent_conf[1]),
+  CI_upper = c(glm_conf[2], cart_conf[2], mars_conf[2], pls_conf[2], lda_conf[2], cent_conf[2])
+)
+print(ci_table)
+```
+
+**ROC metrics didn't change much, however now the models have improved at detecting the positive class which for the context of the stated objective is an improvement**
+
+```{r}
+
+mars <- second_round$earth
+
+confusionMatrix(mars$pred$pred, mars$pred$obs)
+
+```
+```{r}
+
+var_imps <- map(second_round[c(1:4, 6)], varImp)
+
+map(var_imps, plot, top = 15)
+
+glm_least <- var_imps$glm$importance %>% arrange(Overall)
+cart_least <- var_imps$rpart$importance %>% arrange(Overall)
+pls_least <- var_imps$pls$importance %>% arrange(Overall)
+centroid_least <- var_imps$pam$importance %>% arrange(HrDib)
+
+head(glm_least)
+head(cart_least)
+head(pls_least)
+head(centroid_least)
+var_imps$earth$importance
+
+```
+**After this second round of modeling, Sleep and Paid Sick Leave seem to be at the bottom of importance each year as does AHSTATYR**
+
+```{r}
+
+df <- df %>% select(-c("Sleep", "AHSTATYR", "PaidSickLeave"))
+
+```
+
+```{r}
+glm <- second_round$glm
+
+summary(glm)
+
+```
+
+**Before attempting hyperparameter tuning, there are 70K records of data so it's an open question of whether all that data is necessary to fully train a model, or if less data can be used for the same results and be much more efficient.  One way that can be discovered is by using carets built in method for learning curves**
+
+```{r}
+
+# One-hot encode the data to prepare for creating the learning curve
+encoded_df <- one_hot_encode(df_for_encoding)
+
+# Use all the data first and see what the curve looks like
+learning_curve(encoded_df, 68000, "rpart")
+```
+**A basic tree model seems to peak at 50k, how low can we go**
+
+```{r}
+learning_curve(encoded_df, 50000, "earth")
+learning_curve(encoded_df, 50000, "pls")
+```
+**For these models, 30-50k seems to be the sweet spot to achieve optimal performance.  We'll perform hyperparameter tuning using 30K records (to account for upsampling) and explore the results**
+
+```{r}
+glm_tuned <- tar_read(glm_tuned)
+pls_tuned <- tar_read(pls_tuned)
+rpart_tuned <- tar_read(rpart_tuned)
+cent_tuned <- tar_read(centroids_tuned)
+
+# Mars was lagging in the pipeline so that model was hypertuned separately
+my_models <- readRDS("modeling/first_tuned_models.rds")
+mars <- my_models$MARS
+
+tuning_comp <- resamples(list(
+  "GLM" = glm_tuned,
+  'CART' = rpart_tuned,
+  "PLS" = pls_tuned,
+  "Centroids" = cent_tuned,
+  "MARS" = mars
+)
+)
+
+bwplot(tuning_comp)
+
+glm_conf <- quantile(tuning_comp$values$`GLM~ROC`, c(0.025, 0.975))
+cart_conf <- quantile(tuning_comp$values$`CART~ROC`, c(0.025, 0.975))
+pls_conf <- quantile(tuning_comp$values$`PLS~ROC`, c(0.025, 0.975))
+cent_conf <- quantile(tuning_comp$values$`Centroids~ROC`, c(0.025, 0.975))
+mars_conf <- quantile(tuning_comp$values$`MARS~ROC`, c(0.025, 0.975))
+
+ci_table <- data.frame(
+  Model = c("GLM", "Cart", "Pls", "Centroids", "Mars"),
+  CI_lower = c(glm_conf[1], cart_conf[1], pls_conf[1], cent_conf[1], mars_conf[1]),
+  CI_upper = c(glm_conf[2], cart_conf[2], pls_conf[2], cent_conf[2], mars_conf[2])
+)
+print(ci_table)
+```
+
+**Turns out tuning on less data resulted in models with more variance and not much if any gain in performance**
+
+**Because the data is mainly categorical, tree based models are good candidates to test out.  Some of the more advanced models are prone to overfitting, and can take awhile to train, so it's prudent to start with a small subset of data and work up**
+
+```{r}
+
+# Start with random forest model. These can take awhile to run so the plots are loaded below
+
+# learning_curve(encoded_df, 20000, "ranger")
+
+rforest <-  readRDS("modeling/rforest_learning.rds")
+ggplot(rforest, aes(x = Training_Size, y = ROC, color = Data)) +
+  geom_smooth(method = loess, span = .8) +
+  theme_bw()
+  
+  
+# Xgb
+
+# learning_curve(encoded_df, 5000, "xgbTree")
+
+xgb <-  readRDS("modeling/xg_learning.rds")
+ggplot(xgb, aes(x = Training_Size, y = ROC, color = Data)) +
+  geom_smooth(method = loess, span = .8) +
+  theme_bw()
+
+# ADA
+
+# learning_curve(encoded_df, 10000, "ada")
+
+ada <-  readRDS("modeling/ada_learning.rds")
+ggplot(ada, aes(x = Training_Size, y = ROC, color = Data)) +
+  geom_smooth(method = loess, span = .8) +
+  theme_bw()
+```
+**These models seem to peak anywhere from 5-20k records, so we'll attempt hyperparameter tuning on these with 10k records**
+
+```{r}
+
+final_model <- resamples(list(
+  "GLM" = second_round$glm,
+  "MARS" = second_round$earth,
+  "PLS" = pls_tuned,
+  "Centroids" = second_round$pam,
+  "RandFor" = tuned_rf,
+  "XGB" = xgb_tuned
+)
+)
+
+bwplot(final_model)
+
+glm_conf <- quantile(final_model$values$`GLM~ROC`, c(0.025, 0.975))
+mars_conf <- quantile(final_model$values$`MARS~ROC`, c(0.025, 0.975))
+pls_conf <- quantile(final_model$values$`PLS~ROC`, c(0.025, 0.975))
+cent_conf <- quantile(final_model$values$`Centroids~ROC`, c(0.025, 0.975))
+rf_conf <- quantile(final_model$values$`RandFor~ROC`, c(0.025, 0.975))
+xgb_conf <- quantile(final_model$values$`XGB~ROC`, c(0.025, 0.975))
+
+ci_table <- data.frame(
+  Model = c("GLM", "Mars", "Pls", "Centroids", "RF", "XGB"),
+  CI_lower = c(glm_conf[1], mars_conf[1], pls_conf[1], cent_conf[1], rf_conf[1], xgb_conf[1]),
+  CI_upper = c(glm_conf[2], mars_conf[2], pls_conf[2], cent_conf[2], rf_conf[2], xgb_conf[2])
+)
+print(ci_table)
+
+```
+
+** Evaluate tree models**
+
+```{r}
+rf_model <- tar_read(random_forest_tuned)
+lgb_model <- tar_read(lgb_model)
+xgb_model <- tar_read(xgb_tuned)
+#ada_model <- tar_read(ada_tuned)
+```
+
+

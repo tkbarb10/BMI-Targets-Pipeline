@@ -1,0 +1,950 @@
+---
+title: "Full_variable_description"
+output: html_document
+---
+
+# NHIS Variable Documentation with Codes
+
+Below is a codebook-style reference for all variables, including their general descriptions and all relevant code/value tables.
+
+---
+
+## SRVY_YR
+
+> **Description:** Survey year.
+
+---
+
+## HHX
+
+> **Description:** Household serial number (identifies each household).
+
+**Codes:**  
+*Unique identifier; no coded values.*
+
+---
+
+## INDSTRN2
+
+> **Description:** Simple industry classification for the sample adult’s longest-held or current job.
+
+**Codes:**
+
+| Value | Label |
+|-------|--------------------------------------------------|
+| 01    | Agriculture, Forestry, Fishing, and Hunting      |
+| 02    | Mining                                          |
+| 03    | Utilities                                       |
+| 04    | Construction                                    |
+| 05    | Manufacturing                                   |
+| 06    | Wholesale Trade                                 |
+| 07    | Retail Trade                                    |
+| 08    | Transportation and Warehousing                  |
+| 09    | Information                                     |
+| 10    | Finance and Insurance                           |
+| 11    | Real Estate and Rental and Leasing              |
+| 12    | Professional, Scientific, and Technical Services|
+| 13    | Management of Companies and Enterprises         |
+| 14    | Administrative and Support and Waste Management |
+| 15    | Educational Services                            |
+| 16    | Health Care and Social Assistance               |
+| 17    | Arts, Entertainment, and Recreation             |
+| 18    | Accommodation and Food Services                 |
+| 19    | Other Services (except Public Administration)   |
+| 20    | Public Administration                           |
+| 21    | Armed Forces                                    |
+| 97    | Refused, classified                             |
+| 98    | Not ascertained                                 |
+| 99    | Don't know                                      |
+
+---
+
+## OCCUPN2
+
+> **Description:** Simple occupation classification for the sample adult’s longest-held or current job.
+
+**Codes:**
+
+| Value | Label |
+|-------|------------------|
+| 01    | Management Occupations |
+| 02    | Business Operations Specialists |
+| 03    | Financial Specialists |
+| 04    | Computer and Mathematical Science Occupations |
+| 05    | Architecture and Engineering Occupations |
+| 06    | Life, Physical, and Social Science Occupations |
+| 07    | Community and Social Services Occupations |
+| 08    | Legal Occupations |
+| 09    | Education, Training, and Library Occupations |
+| 10    | Arts, Design, Entertainment, Sports, and Media Occupations |
+| 11    | Healthcare Practitioners and Technical Occupations |
+| 12    | Healthcare Support Occupations |
+| 13    | Protective Service Occupations |
+| 14    | Food Preparation and Serving Related Occupations |
+| 15    | Building and Grounds Cleaning and Maintenance Occupations |
+| 16    | Personal Care and Service Occupations |
+| 17    | Sales and Related Occupations |
+| 18    | Office and Administrative Support Occupations |
+| 19    | Farming, Fishing, and Forestry Occupations |
+| 20    | Construction and Extraction Occupations |
+| 21    | Installation, Maintenance, and Repair Occupations |
+| 22    | Production Occupations |
+| 23    | Transportation and Material Moving Occupations |
+| 97    | Refused, classified |
+| 98    | Not ascertained |
+| 99    | Don't know |
+
+---
+
+## INDSTRY2
+
+> **Description:** General/broad industry classification for the sample adult’s longest-held or current job.
+
+**Codes:**
+
+| Value | Label |
+|-------|--------------------------------------------------|
+| 01    | Agriculture, Forestry, Fishing, and Hunting      |
+| 02    | Mining                                          |
+| 03    | Utilities                                       |
+| 04    | Construction                                    |
+| 05    | Manufacturing                                   |
+| 06    | Wholesale Trade                                 |
+| 07    | Retail Trade                                    |
+| 08    | Transportation and Warehousing                  |
+| 09    | Information                                     |
+| 10    | Finance and Insurance                           |
+| 11    | Real Estate and Rental and Leasing              |
+| 12    | Professional, Scientific, and Technical Services|
+| 13    | Management of Companies and Enterprises         |
+| 14    | Administrative and Support and Waste Management |
+| 15    | Educational Services                            |
+| 16    | Health Care and Social Assistance               |
+| 17    | Arts, Entertainment, and Recreation             |
+| 18    | Accommodation and Food Services                 |
+| 19    | Other Services (except Public Administration)   |
+| 20    | Public Administration                           |
+| 21    | Armed Forces                                    |
+| 97    | Refused, classified                             |
+| 98    | Not ascertained                                 |
+| 99    | Don't know                                      |
+
+---
+
+## PDSICKA
+
+> **Description:** Number of days the sample adult missed work due to illness or injury in the past 12 months.
+
+**Codes:**  
+*Continuous variable; 0-365 days typically. Special codes may apply in some years.*
+
+---
+
+## HYPEV
+
+> **Description:** Ever told by a health professional that you have hypertension.
+
+**Codes:**
+
+| Value | Label   |
+|-------|---------|
+| 1     | Yes     |
+| 2     | No      |
+| 7     | Refused |
+| 8     | Not ascertained |
+| 9     | Don't know |
+
+---
+
+## HYPDIFV
+
+> **Description:** Ever told on two or more different visits that you have hypertension.
+
+**Codes:**
+
+| Value | Label   |
+|-------|---------|
+| 1     | Yes     |
+| 2     | No      |
+| 7     | Refused |
+| 8     | Not ascertained |
+| 9     | Don't know |
+
+---
+
+## CHDEV
+
+> **Description:** Ever told you had coronary heart disease.
+
+**Codes:**
+
+| Value | Label   |
+|-------|---------|
+| 1     | Yes     |
+| 2     | No      |
+| 7     | Refused |
+| 8     | Not ascertained |
+| 9     | Don't know |
+
+---
+
+## ANGEV
+
+> **Description:** Ever told you had angina pectoris.
+
+**Codes:**
+
+| Value | Label   |
+|-------|---------|
+| 1     | Yes     |
+| 2     | No      |
+| 7     | Refused |
+| 8     | Not ascertained |
+| 9     | Don't know |
+
+---
+
+## MIEV
+
+> **Description:** Ever told you had a heart attack (myocardial infarction).
+
+**Codes:**
+
+| Value | Label   |
+|-------|---------|
+| 1     | Yes     |
+| 2     | No      |
+| 7     | Refused |
+| 8     | Not ascertained |
+| 9     | Don't know |
+
+---
+
+## HRTEV
+
+> **Description:** Ever told you had any other heart condition or heart disease.
+
+**Codes:**
+
+| Value | Label   |
+|-------|---------|
+| 1     | Yes     |
+| 2     | No      |
+| 7     | Refused |
+| 8     | Not ascertained |
+| 9     | Don't know |
+
+---
+
+## STREV
+
+> **Description:** Ever told you had a stroke.
+
+**Codes:**
+
+| Value | Label   |
+|-------|---------|
+| 1     | Yes     |
+| 2     | No      |
+| 7     | Refused |
+| 8     | Not ascertained |
+| 9     | Don't know |
+
+---
+
+## EPHEV
+
+> **Description:** Ever told you had emphysema.
+
+**Codes:**
+
+| Value | Label   |
+|-------|---------|
+| 1     | Yes     |
+| 2     | No      |
+| 7     | Refused |
+| 8     | Not ascertained |
+| 9     | Don't know |
+
+---
+
+## AASMEV
+
+> **Description:** Ever been told by a doctor that you have diabetes
+
+**Codes:**
+
+| Value | Label   |
+|-------|---------|
+| 1     | Yes     |
+| 2     | No      |
+| 7     | Refused |
+| 8     | Not ascertained |
+| 9     | Don't know |
+
+---
+
+## BMI
+
+> **Description:** Body mass index (weight in kg ÷ height in m²).
+*For both men and women, underweight is BMI < 18.5; healthy weight is BMI 18.5 to <25; overweight is BMI > = 25 to <30; obese is BMI > = 30.*
+
+**Codes:**  
+*Continuous variable; except for codes below.*
+
+| Value | Label         |
+|-------|--------------|
+| 9995  | Theoretical value|
+| 9999  | Unknown |
+
+---
+
+## AHEIGHT
+
+> **Description:** Self-reported height (in inches).
+
+**Codes:**  
+*Continuous except for the special codes below*
+
+| Value | Label         |
+|-------|--------------|
+| 96   | Not available| **Too extreme to be reported**
+| 97   | Refused      |
+| 98   | Not ascertained |
+| 99   | Don't know   |
+
+---
+
+## AWEIGHTP
+
+> **Description:** Self-reported weight (in pounds).
+
+**Codes:**  
+*Continuous variable. Special codes in some years:*
+
+| Value | Label         |
+|-------|--------------|
+| 996   | Not available| **sex-specific extreme values that couldn't be reported**
+| 997   | Refused      |
+| 998   | Not ascertained |
+| 999   | Don't know   |
+
+---
+
+## AHSTATYR
+
+> **Description:** Years since last routine health check.
+
+**Codes:**
+
+| Value | Label   |
+|-------|---------|
+| 00-84 | 0-84 years |
+| 85    | 85+ years |
+| 97    | Refused   |
+| 98    | Not ascertained |
+| 99    | Don't know |
+
+---
+
+## SLEEP
+
+> **Description:** Average hours of sleep per 24-hour period.
+
+**Codes:**
+
+| Value | Label   |
+|-------|---------|
+| 01-24 | 1-24 hours |
+| 97    | Refused   |
+| 98    | Not ascertained |
+| 99    | Don't know |
+
+---
+
+## ASISLEEP
+
+> **Description:** Same as above for years post-2013
+
+---
+
+
+## CANEV
+
+> **Description:** Ever told you had any cancer.
+
+**Codes:**
+
+| Value | Label   |
+|-------|---------|
+| 1     | Yes     |
+| 2     | No      |
+| 7     | Refused |
+| 8     | Not ascertained |
+| 9     | Don't know |
+
+---
+
+## ALCHRC12
+
+> **Description:** Duration of cancer.
+
+**Codes:**
+
+| Value | Label   |
+|-------|---------|
+| 00-85 | 0–85+ years |
+| 97    | Refused     |
+| 98    | Not ascertained |
+| 99    | Don't know  |
+
+---
+
+## DIBEV
+
+> **Description:** Ever told you have diabetes (excluding gestational).
+
+**Codes:**
+
+| Value | Label   |
+|-------|---------|
+| 1     | Yes     |
+| 2     | No      |
+| 7     | Refused |
+| 8     | Not ascertained |
+| 9     | Don't know |
+
+---
+
+## DIBAGE
+
+> **Description:** Age first diagnosed with diabetes.
+
+**Codes:**
+
+| Value | Label   |
+|-------|---------|
+| 01-84 | 1–84 years |
+| 85    | 85+ years  |
+| 97    | Refused    |
+| 98    | Not ascertained |
+| 99    | Don't know |
+
+---
+
+## AFLHCA10
+
+> **Description:** Diabetes causes difficulty with activity.
+
+**Codes:**
+
+| Value | Label   |
+|-------|---------|
+| 1     | Yes     |
+| 2     | No      |
+| 7     | Refused |
+| 8     | Not ascertained |
+| 9     | Don't know |
+
+---
+
+## DIABEV1
+
+> **Description:** Ever told you have borderline diabetes or high blood sugar.
+
+**Codes:**
+
+| Value | Label   |
+|-------|---------|
+| 1     | Yes     |
+| 2     | No      |
+| 7     | Refused |
+| 8     | Not ascertained |
+| 9     | Don't know |
+
+---
+
+## DIBAGE1
+
+> **Description:** Alternate coding for age at diabetes diagnosis.
+
+**Codes:**
+
+| Value | Label   |
+|-------|---------|
+| 01-84 | 1–84 years |
+| 85    | 85+ years  |
+| 97    | Refused    |
+| 98    | Not ascertained |
+| 99    | Don't know |
+
+---
+
+## INSLN
+
+> **Description:** Currently taking insulin for diabetes.
+
+**Codes:**
+
+| Value | Label   |
+|-------|---------|
+| 1     | Yes     |
+| 2     | No      |
+| 7     | Refused |
+| 8     | Not ascertained |
+| 9     | Don't know |
+
+---
+
+## ALCHRC10
+
+> **Description:** Duration of diabetes.
+
+**Codes:**
+
+| Value | Label   |
+|-------|---------|
+| 1     | Chronic |
+| 2     | Not chronic|
+| 9     | Unknown |
+
+
+---
+
+
+## AFLHCA7
+
+> **Description:** Heart problems cause difficulty with activity.
+
+**Codes:**
+
+| Value | Label   |
+|-------|---------|
+| 1     | Yes     |
+| 2     | No      |
+| 7     | Refused |
+| 8     | Not ascertained |
+| 9     | Don't know |
+
+---
+
+## ALCHRC7
+
+> **Description:** Duration of heart problem.
+
+**Codes:**
+
+| Value | Label   |
+|-------|---------|
+| 1     | Chronic |
+| 2     | Not chronic|
+| 9     | Unknown |
+
+
+---
+### ALCHRC9
+
+> **Description:** Duration of hypertension.
+
+**Codes:**
+
+| Value | Label   |
+|-------|---------|
+| 1     | Chronic |
+| 2     | Not chronic|
+| 9     | Unknown |
+
+---
+
+## ALCHRC21
+
+> **Description:** Duration of circulation problems.
+
+**Codes:**
+
+| Value | Label   |
+|-------|---------|
+| 1     | Chronic |
+| 2     | Not chronic|
+| 9     | Unknown |
+
+
+---
+
+
+## SMKEV
+
+> **Description:** Ever smoked at least 100 cigarettes in your lifetime.
+
+**Codes:**
+
+| Value | Label   |
+|-------|---------|
+| 1     | Yes     |
+| 2     | No      |
+| 7     | Refused |
+| 8     | Not ascertained |
+| 9     | Don't know |
+
+---
+
+## SMKREG
+
+> **Description:** Ever a regular smoker (smoked regularly for a sustained period).
+
+**Codes:**
+
+| Value | Label   |
+|-------|---------|
+| 1     | Yes     |
+| 2     | No      |
+| 7     | Refused |
+| 8     | Not ascertained |
+| 9     | Don't know |
+
+---
+
+## SMKNOW
+
+> **Description:** Awareness of smoking-related health risks.
+
+**Codes:**
+
+| Value | Label   |
+|-------|---------|
+| 1     | Yes     |
+| 2     | No      |
+| 7     | Refused |
+| 8     | Not ascertained |
+| 9     | Don't know |
+
+---
+
+## SMKSTAT2
+
+> **Description:** Current smoking status (never/former/current).
+
+**Codes:**
+
+| Value | Label         |
+|-------|--------------|
+| 1     | Current smoker (every day)  |
+| 2     | Current smoker (some days)  |
+| 3     | Former smoker               |
+| 4     | Never smoked                |
+| 7     | Refused                     |
+| 8     | Not ascertained             |
+| 9     | Don't know                  |
+
+---
+
+## SMKQTY
+
+> **Description:** Number of cigarettes usually smoked per day.
+
+**Codes:**  
+*Continuous variable (1–99). Special codes in some years:*
+
+| Value | Label         |
+|-------|--------------|
+| 97    | Refused      |
+| 98    | Not ascertained |
+| 99    | Don't know   |
+
+---
+
+## CIGSDA1
+
+> **Description:** CIGS per day.
+
+**Codes:**  
+*Continuous variable (0–30). Special codes in some years:*
+
+| Value | Label         |
+|-------|--------------|
+| 97    | Refused      |
+| 98    | Not ascertained |
+| 99    | Don't know   |
+
+---
+
+## CIGDAMO
+
+> **Description:** Number of days smoked in past month.
+
+**Codes:**  
+*Continuous variable. Special codes:*
+
+| Value | Label         |
+|-------|--------------|
+| 97    | Refused      |
+| 98    | Not ascertained |
+| 99    | Don't know   |
+
+---
+
+## CIGSDA2
+
+> **Description:** Days smoked per day in last month.
+
+**Codes:**  
+*Continuous variable (0–31). Special codes:*
+
+| Value | Label         |
+|-------|--------------|
+| 97    | Refused      |
+| 98    | Not ascertained |
+| 99    | Don't know   |
+
+---
+
+## CIGSDAY
+
+> **Description:** Usual cigarettes per day on days smoked.
+
+**Codes:**  
+*Continuous variable (1–99). Special codes:*
+
+| Value | Label         |
+|-------|--------------|
+| 97    | Refused      |
+| 98    | Not ascertained |
+| 99    | Don't know   |
+
+---
+
+## CIGQTYR
+
+> **Description:** Have you stopped smoking for a day in the past year because you were trying to quit?
+
+**Codes:**  
+
+| Value | Label         |
+|-------|--------------|
+| 1     | Yes  |
+| 2     | No  |
+| 7     | Refused                     |
+| 8     | Not ascertained             |
+| 9     | Don't know                  |
+
+---
+
+## VIGFREQW
+
+> **Description:** Frequency of vigorous leisure-time physical activity per week.
+
+**Codes:**  
+*Continuous variable (0–28). Special codes:*
+
+| Value | Label         |
+|-------|--------------|
+| 97    | Refused      |
+| 98    | Not ascertained |
+| 99    | Don't know   |
+
+---
+
+## VIGMIN
+
+> **Description:** Minutes per session of vigorous activity.
+
+**Codes:**  
+*Continuous variable (1–999). Special codes:*
+
+| Value | Label         |
+|-------|--------------|
+| 997   | Refused      |
+| 998   | Not ascertained |
+| 999   | Don't know   |
+
+---
+
+## MODFREQW
+
+> **Description:** Frequency of moderate leisure-time physical activity per week.
+
+**Codes:**  
+*Continuous variable (0–28). Special codes:*
+
+| Value | Label         |
+|-------|--------------|
+| 97    | Refused      |
+| 98    | Not ascertained |
+| 99    | Don't know   |
+
+---
+
+## MODMIN
+
+> **Description:** Minutes per session of moderate activity.
+
+**Codes:**  
+*Continuous variable (1–999). Special codes:*
+
+| Value | Label         |
+|-------|--------------|
+| 997   | Refused      |
+| 998   | Not ascertained |
+| 999   | Don't know   |
+
+---
+
+## STRFREQW
+
+> **Description:** Frequency of strength-training activities per week.
+
+**Codes:**  
+*Continuous variable (0–28). Special codes:*
+
+| Value | Label         |
+|-------|--------------|
+| 97    | Refused      |
+| 98    | Not ascertained |
+| 99    | Don't know   |
+
+---
+
+## AFLHCA18
+
+> **Description:** Ever had issues with physical activity because of weight.
+
+**Codes:**
+
+| Value | Label   |
+|-------|---------|
+| 1     | Yes     |
+| 2     | No      |
+| 7     | Refused |
+| 8     | Not ascertained |
+| 9     | Don't know |
+
+---
+
+## ALC12MWK
+
+> **Description:** Number of drinking occasions with at least one drink in the past week.
+
+**Codes:**  
+*Continuous variable (0–7). Special codes:*
+
+| Value | Label         |
+|-------|--------------|
+| 97    | Refused      |
+| 98    | Not ascertained |
+| 99    | Don't know   |
+
+---
+
+## ALC12MYR
+
+> **Description:** Number of drinking occasions with at least one drink in the past year.
+
+**Codes:**  
+*Continuous variable (0–365). Special codes:*
+
+| Value | Label         |
+|-------|--------------|
+| 997   | Refused      |
+| 998   | Not ascertained |
+| 999   | Don't know   |
+
+---
+
+## ALCAMT
+
+> **Description:** Usual number of drinks consumed per drinking day.
+
+**Codes:**  
+*Continuous variable (1–99). Special codes:*
+
+| Value | Label         |
+|-------|--------------|
+| 97    | Refused      |
+| 98    | Not ascertained |
+| 99    | Don't know   |
+
+---
+
+## ALCSTAT
+
+> **Description:** Alcohol consumption status (lifetime abstainer, former, current).
+
+**Codes:**
+
+| Value | Label                |
+|-------|----------------------|
+| 1     | Lifetime abstainer   |
+| 2     | Former drinker       |
+| 3     | Current drinker      |
+| 7     | Refused              |
+| 8     | Not ascertained      |
+| 9     | Don't know           |
+
+---
+
+## ALC5UPYR
+
+> **Description:** Ever had five or more drinks on one occasion in the past year.
+
+**Codes:**
+
+| Value | Label   |
+|-------|---------|
+| 1     | Yes     |
+| 2     | No      |
+| 7     | Refused |
+| 8     | Not ascertained |
+| 9     | Don't know |
+
+---
+
+## ALC5UPYR1
+
+> **Description:** Frequency of heavy drinking occasions in the past year.
+
+**Codes:**  
+*Continuous variable (0–365). Special codes:*
+
+| Value | Label         |
+|-------|--------------|
+| 997   | Refused      |
+| 998   | Not ascertained |
+| 999   | Don't know   |
+
+---
+
+## ALCSTAT1
+
+> **Description:** Alcohol consumption status in the past month.
+
+**Codes:**
+
+| Value | Label                |
+|-------|----------------------|
+| 1     | Lifetime abstainer   |
+| 2     | Former drinker       |
+| 3     | Current drinker      |
+| 7     | Refused              |
+| 8     | Not ascertained      |
+| 9     | Don't know           |
+
+---
+
+## ALC7STAT
+
+> **Description:** Alternative alcohol-use status coding across survey years.
+
+**Codes:**
+
+| Value | Label         |
+|-------|--------------|
+| 1     | Never drank   |
+| 2     | Former drinker |
+| 3     | Current drinker |
+| 7     | Refused      |
+| 8     | Not ascertained |
+| 9     | Don't know   |
+
+---
+
+
