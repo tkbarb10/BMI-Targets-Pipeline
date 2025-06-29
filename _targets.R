@@ -11,7 +11,7 @@ source("utils/Upsampling.R")
 controller <- crew_controller_local(workers = 6)
 
 tar_option_set(
-  packages = c('tidyverse', 'arrow', 'SAScii', 'VIM', 'caret', 'pROC', "earth", "lightgbm", 'xgboost'), 
+  packages = c('tidyverse', 'arrow', 'SAScii', 'VIM', 'caret', 'pROC', "earth", "lightgbm", 'xgboost', 'nhanesA'), 
   controller = controller,
   garbage_collection = 2)
 

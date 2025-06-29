@@ -1,18 +1,8 @@
-- Columns to drop from linked_data
- c('HHX', 'FMX', 'PX', 'FPX', 'ELIGSTAT', 'DODQTR', 'DODYEAR', 'WGT_NEW', 'SA_WGT_NEW')
- 
+- I have the manifest, what if I pull the unique years, group by those years, link the dataframes, then bind rows?
+  - 1999-2000 and 1999-2004 are the main groups for that year, the rest are by normal year jumps
+  - 2007-2012 goes with 2007
+  - disregard 1988-2020
 
-- Columns to combine (add to this and bring up in paper)
-  - INDSTRY2 and INDSTRN2
-  - ASISLEEP and SLEEP
-  - DIBAGE and DIBAGE1
-  - OCCUPN2 and OCCUP2
-  
 
-- use how we handled Sleep in the data wrangling portion
+- exceptions to that are 1999-2020 and 1999-2023, those are dietary supplements so I can do that separately
 
-- in ReadMe mention about newtork timeouts when ingesting data (maybe add retry logic)
-
-- used Diabetes Age to fill in Diabetes Ever
-
-- naive bayes has trouble with the initial data imbalance

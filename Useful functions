@@ -1,0 +1,10 @@
+# Download a specific table
+
+df1 <- nhanes(nh_table = "BPX_E", includelabels = T, translated = F)
+
+# Get the manifest (url, table, description etc) for a given set of data
+
+super_df <- nhanesManifest(
+  which = "public",
+  component = "dietary"
+)
