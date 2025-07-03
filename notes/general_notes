@@ -6,3 +6,11 @@
 
 - exceptions to that are 1999-2020 and 1999-2023, those are dietary supplements so I can do that separately
 
+- Create a hyperparameter table to track changes and results
+	 - Dataset
+	 - Cross-validation setup/training split
+	 - model (specific package and name)
+	 - hyperparameters for model
+	 - results (use a few metrics here)
+	 - CI's
+
